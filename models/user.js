@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import uniqueValidator from "mongoose-unique-validator";
+import uniqueValidator from "mongoose-unique-validator"; //plugin which adds pre-save validation for unique fields
 
 const userSchema = new mongoose.Schema(
   {

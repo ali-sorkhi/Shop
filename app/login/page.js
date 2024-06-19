@@ -5,6 +5,7 @@ import { FormEvent } from "react";
 import toast from "react-hot-toast";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -67,6 +68,10 @@ export default function Register() {
               >
                 {loading ? "Please wait.." : "Submit"}
               </button>
+              <Link className="btn mb-4" href="/forgot-password">
+                <small>Forgot Password</small>
+              </Link>
+              
             </form>
           </div>
         </div>

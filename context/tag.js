@@ -110,6 +110,26 @@ export const TagProvider = ({ children }) => {
     }
   };
 
+  const fetchTagsPublic = async () => {
+    try {
+      const response = await fetch(`${process.env.API}/tags`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        toast.error(data);
+      } else {
+        setTags(data);
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error("Error creating tag");
+    }
+  };
+
   return (
     <TagContext.Provider
       value={{
@@ -125,6 +145,7 @@ export const TagProvider = ({ children }) => {
         setUpdatingTag,
         updateTag,
         deleteTag,
+        fetchTagsPublic,
       }}
     >
       {children}

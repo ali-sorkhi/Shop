@@ -1,5 +1,10 @@
 import Link from "next/link";
-export default function Pagination({ currentPage, totalPages, pathname }) {
+export default function Pagination({
+  currentPage,
+  totalPages,
+  pathname,
+  searchParams,
+}) {
   return (
     <div className="row">
       <div className="col">

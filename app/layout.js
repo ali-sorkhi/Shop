@@ -5,11 +5,7 @@ import { NextAuthProvider } from "@/utils/NextAuthProvider";
 import { CategoryProvider } from "@/context/category";
 import { TagProvider } from "@/context/tag";
 import { ProductProvider } from "@/context/product";
-
-export const metadata = {
-  title: "Shop",
-  description: "Online Shop",
-};
+import { CartProvider } from "@/context/cart";
 
 export default function RootLayout({ children }) {
   return (
@@ -18,11 +14,13 @@ export default function RootLayout({ children }) {
         <CategoryProvider>
           <TagProvider>
             <ProductProvider>
-              <body>
-                <TopNav />
-                <Toaster />
-                {children}
-              </body>
+              <CartProvider>
+                <body>
+                  <TopNav />
+                  <Toaster />
+                  {children}
+                </body>
+              </CartProvider>
             </ProductProvider>
           </TagProvider>
         </CategoryProvider>

@@ -4,7 +4,7 @@ import { useProduct } from "@/context/product";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import Pagination from "../Pagination";
+import Pagination from "./Pagination";
 
 export default function ProductList() {
   const {

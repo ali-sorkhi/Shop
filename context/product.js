@@ -13,6 +13,16 @@ export const ProductProvider = ({ children }) => {
   const [totalPages, setTotalPages] = useState(1);
   const [updatingProduct, setUpdatingProduct] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [showRatingModal, setShowRatingModal] = useState(false);
+  const [currentRating, setCurrentRating] = useState(0);
+  const [comment, setComment] = useState("");
+  const [showImagePreviewModal, setShowImagePreviewModal] = useState(false);
+  const [currentImagePreviewUrl, setCurrentImagePreviewUrl] = useState("");
+
+  // text search
+  const [productSearchQuery, setProductSearchQuery] = useState("");
+  const [productSearchResults, setProductSearchResults] = useState([]);
+
   const router = useRouter();
 
   const uploadImages = (e) => {
@@ -198,6 +208,60 @@ export const ProductProvider = ({ children }) => {
     }
   };
 
+  const openModal = (url) => {
+    setCurrentImagePreviewUrl(url);
+    setShowImagePreviewModal(true);
+  };
+
+  const closeModal = () => {
+    setShowImagePreviewModal(false);
+    setShowRatingModal(false);
+  };
+  const handleClickOutside = (event) => {
+    if (event.target.classList.contains("modal")) {
+      closeModal();
+    }
+  };
+
+  const openImagePreviewModal = (url) => {
+    setCurrentImagePreviewUrl(url);
+    setShowImagePreviewModal(true);
+  };
+
+  const fetchBrands = async () => {
+    try {
+      const response = await fetch(`${process.env.API}/product/brands`, {
+        method: "GET",
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        toast.error(data?.err);
+      } else {
+        setBrands(data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchProductSearchResults = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(
+        `${process.env.API}/search/products?productSearchQuery=${productSearchQuery}`
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      setProductSearchResults(data);
+      // console.log("search results => ", data);
+      router.push(`/search/products?productSearchQuery=${productSearchQuery}`);
+    } catch (error) {
+      console.error("Error fetching search results:", error);
+    }
+  };
+
   return (
     <ProductContext.Provider
       value={{
@@ -219,6 +283,23 @@ export const ProductProvider = ({ children }) => {
         fetchProducts,
         updateProduct,
         deleteProduct,
+        openModal,
+        closeModal,
+        showImagePreviewModal,
+        setShowImagePreviewModal,
+        setCurrentImagePreviewUrl,
+        showRatingModal,
+        setShowRatingModal,
+        currentRating,
+        setCurrentRating,
+        comment,
+        setComment,
+        fetchBrands,
+        productSearchQuery,
+        setProductSearchQuery,
+        productSearchResults,
+        setProductSearchResults,
+        fetchProductSearchResults,
       }}
     >
       {children}

@@ -1,5 +1,5 @@
 "use client";
-import ProductList from "@/components/product/admin/ProductList";
+import ProductList from "@/components/product/ProductList";
 export default function AddProduct() {
   return (
     <div className="container mb-5">

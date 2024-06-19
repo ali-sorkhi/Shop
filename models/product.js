@@ -22,16 +22,6 @@ const ratingSchema = new mongoose.Schema(
   { timestamps: true } // Add timestamps
 );
 
-const likeSchema = new mongoose.Schema(
-  {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-  },
-  { timestamps: true } // Add timestamps
-);
-
 const productSchema = new mongoose.Schema(
   {
     title: {
@@ -103,13 +93,12 @@ const productSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    likes: [likeSchema],
-    // likes: [
-    // {
-    // type: mongoose.Schema.Types.ObjectId,
-    // ref: "User",
-    // },
-    // ],
+    likes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     ratings: [ratingSchema],
     // ratings: [
     // {

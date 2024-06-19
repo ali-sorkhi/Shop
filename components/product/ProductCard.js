@@ -2,6 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import ProductLike from "./ProductLike";
+import Stars from "./Stars";
+import { calculateAverageRating } from "@/utils/helpers";
+import ProductRating from "./ProductRating";
+import AddToCart from "./AddToCart";
 
 dayjs.extend(relativeTime);
 
@@ -18,7 +23,9 @@ export default function ({ product }) {
         />
       </div>
       <div className="card-body">
-        <h5 className="card-title">{product?.title}</h5>
+        <Link href={`/product/${product?.slug}`}>
+          <h5 className="card-title">{product?.title}</h5>
+        </Link>
         <div
           dangerouslySetInnerHTML={{
             __html:
@@ -36,12 +43,21 @@ export default function ({ product }) {
         <small>Tags: {product?.tags?.map((t) => t?.name).join(" ")}</small>
       </div>
       <div className="card-footer d-flex justify-content-between">
-        <small>❤ Likes</small>
+        <ProductLike product={product} />
         <small>Posted {dayjs(product?.createdAt).fromNow()}</small>
       </div>
-      <div className="card-footer d-flex justify-content-between">
-        <small>Brand: {product?.brand}</small>
-        <small>🌟 Stars</small>
+      <div className="card-footer">
+        {/* <pre>{JSON.stringify(product?.ratings, null, 4)}</pre> */}
+        <div className="d-flex justify-content-between align-items-center">
+          <small className="text-muted">Brand: {product?.brand}</small>
+          <div>
+            <small className="text-muted ml-1">Brand: {product?.brand}</small>
+            <ProductRating product={product} leaveRating={false} />
+          </div>
+          <div>
+            <AddToCart product={product} />
+          </div>
+        </div>
       </div>
     </div>
   );
